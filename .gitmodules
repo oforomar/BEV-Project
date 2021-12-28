@@ -1,0 +1,12 @@
+[submodule "W-Stereo-Disp"]
+	path = W-Stereo-Disp
+	url = https://github.com/AhmedYousriSobhi/W-Stereo-Disp.git
+[submodule "avod"]
+	path = avod
+	url = https://github.com/AhmedYousriSobhi/avod.git
+[submodule "Pseudo_Lidar_V2"]
+	path = Pseudo_Lidar_V2
+	url = https://github.com/mileyan/Pseudo_Lidar_V2.git
+[submodule "kitti_object_vis"]
+	path = kitti_object_vis
+	url = https://github.com/AhmedYousriSobhi/kitti_object_vis.git
