@@ -70,14 +70,14 @@ KITTI
 ### Generating depth maps
 
 ```bash
-!python3 "W-Stereo-Disp/src/main_depth.py" -c "W-Stereo-Disp/src/configs/kitti_w1.config" \
+!python "W-Stereo-Disp/src/main_depth.py" -c "W-Stereo-Disp/src/configs/kitti_w1.config" \
     --bval 2 \
     --resume "W-Stereo-Disp/checkpoints/checkpoint.pth.tar" --pretrain "W-Stereo-Disp/checkpoints/model_best.pth.tar" --datapath  "KITTI/testing" \
     --data_list="KITTI/val.txt" --generate_depth_map
 ```
 
-### Visulize depth maps
-
+### Visualize depth maps (optional)
+ 
 ```bash
 import numpy as np
 from matplotlib import pyplot as plt
@@ -87,9 +87,40 @@ plt.imshow(img_array,cmap='gray')
 plt.show()
 ```
 
+## Pseudo Lidar V2
 
+In this step the dataset used should be as follows:
 
+```
+KITTI
+    | val.txt
+    | testing
+        | calib
+          | 000000.txt
+        | image_2
+          | 000000.png
+        | image_3
+          | 000000.png
+        | depth_maps
+          | 000000.npy
+```
+### Convert depth maps to Pseudo-LiDAR and Planes
 
+Convert depth maps to Pseudo-Lidar Point Clouds
+
+```bash
+!python ./Pseudo_Lidar_V2/src/preprocess/generate_lidar_from_depth.py --calib_dir  "KITTI/testing/calib" \
+    --depth_dir "KITTI/testing/depth_maps/"  \
+    --save_dir  "KITTI/testing/velodyne/"
+```
+
+Predict Ground Planes from Point Clouds
+
+```bash
+!python ./Pseudo_Lidar_V2/src/preprocess/generate_lidar_from_depth.py --calib_dir  "KITTI/testing/calib" \
+    --depth_dir "KITTI/testing/depth_maps/"  \
+    --save_dir  "KITTI/testing/velodyne/"
+```
 
 
 If PIL error occurem, Use -> pip install --upgrade pillow
