@@ -61,14 +61,31 @@ KITTI
 # To Download checkpoint.pth.tar, model_best.pth.tar files
 # checkpoint.pth.tar
 !gdown --id 1K110r6n0kg_j3Xq6ThicwOXpYmiBjQ77
+
 # model_best.pth.tar
 !gdown --id 10GKd_H4qpdG4PxPVQ-Cjz9pfmdn78B9o
+
 %cd ../..
 ```
+### Generating depth maps
 
+```bash
+!python3 "W-Stereo-Disp/src/main_depth.py" -c "W-Stereo-Disp/src/configs/kitti_w1.config" \
+    --bval 2 \
+    --resume "W-Stereo-Disp/checkpoints/checkpoint.pth.tar" --pretrain "W-Stereo-Disp/checkpoints/model_best.pth.tar" --datapath  "KITTI/testing" \
+    --data_list="KITTI/val.txt" --generate_depth_map
+```
 
+### Visulize depth maps
 
+```bash
+import numpy as np
+from matplotlib import pyplot as plt
 
+img_array = np.load('KITTI/testing/depth_maps/000000.npy')
+plt.imshow(img_array,cmap='gray')
+plt.show()
+```
 
 
 
