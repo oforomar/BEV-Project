@@ -1,4 +1,5 @@
-# BEV-Project
+# Bird's Eye view detection from Stereo Camera 
+
 
 Clone Repo:
 
