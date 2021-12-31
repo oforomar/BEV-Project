@@ -1,6 +1,11 @@
 # Bird's Eye View Detection from Stereo Camera 
 
-## Dataset Structure
+## Clone this repository
+```bash
+!git clone https://github.com/oforomar/BEV-Project.git --recurse-submodules
+```
+
+## Dataset
 
 [KITTI](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=bev) datasets. The structures of the datasets are shown in below. 
 
@@ -10,14 +15,20 @@ It's preferable to use the following command to download the dataset as we edite
 # install awscli "AWS Command Line" for python
 !pip install awscli 
 
-# Run dataset kitti download script.
+# Kitti download script
 !chmod +x ./W-Stereo-Disp/scripts/download_kitti.sh
 ! ./W-Stereo-Disp/scripts/download_kitti.sh
-
 ```
-#### KITTI Object Detection
+You can use your own Indices for Inference or you can use the following command for using the first 15 images in the testing dataset for inferance   
+```bash
+# val.txt file contain the idx of the images from the dataset, which you want to be used in Inferance.
+!mv val.txt KITTI/
+```
+
+#### KITTI Object Detection Structure
 ```
 KITTI
+    | val.txt
     | testing
         | calib
           | 000000.txt
@@ -25,16 +36,20 @@ KITTI
           | 000000.png
         | image_3
           | 000000.png
-    | val.txt
+```
+## Install Dependencies:
+```bash
+!pip install -r requirements.txt
 ```
 
-## [1- Wasserstein Distances for Stereo Disparity Estimation](https://arxiv.org/abs/2007.03085) 
+## [Wasserstein Distances for Stereo Disparity Estimation](https://arxiv.org/abs/2007.03085) 
 
-![Figure](figures/neurips2020-pipeline.png)
+![Figure](https://user-images.githubusercontent.com/54632431/147827857-3dc56611-7e92-4819-84e5-d12117e5b693.png)
+
 
 
 Clone Repo:
 
-- git clone https://github.com/oforomar/BEV-Project.git --recurse-submodules
+- git clone 
 
 If PIL error occurem, Use -> pip install --upgrade pillow
