@@ -213,7 +213,7 @@ KITTI
           
 ```
 
-Chaning where you are
+Changing where you are
 ```bash
 %cd kitti_object_vis/
 ```
