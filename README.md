@@ -48,12 +48,12 @@ KITTI
 
 ### [Pretrained model](https://drive.google.com/drive/folders/1gePafBBvHJDm1b4EpTa34C3XqoPOz757)
 
-Downloading Checkpoint and Best Model pre-trained, to be used as inferance
-Checkpoints should be located W-Stereo-Disp/checkpoints/
-Steps:
-    1-Create W-Stereo-Disp/checkpoints
-    2-Download the files.
-    3-Return to main project folder
+Downloading Checkpoint and Best Model pre-trained, to be used as inferance. 
+Checkpoints should be located W-Stereo-Disp/checkpoints/. 
+Steps:  
+    1-Create W-Stereo-Disp/checkpoints. 
+    2-Download the files  
+    3-Return to main project folder. 
 ```bash
 !mkdir W-Stereo-Disp/checkpoints
 %cd W-Stereo-Disp/checkpoints
