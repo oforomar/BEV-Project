@@ -46,10 +46,33 @@ KITTI
 
 ![Figure](https://user-images.githubusercontent.com/54632431/147827857-3dc56611-7e92-4819-84e5-d12117e5b693.png)
 
+### [Pretrained model](https://drive.google.com/drive/folders/1gePafBBvHJDm1b4EpTa34C3XqoPOz757)
+
+Downloading Checkpoint and Best Model pre-trained, to be used as inferance.
+Checkpoints should be located W-Stereo-Disp/checkpoints/
+Steps:
+      1-Create W-Stereo-Disp/checkpoints
+      2-Download the files.
+      3-Return to main project folder
+```bash
+!mkdir W-Stereo-Disp/checkpoints
+%cd W-Stereo-Disp/checkpoints
+
+# To Download checkpoint.pth.tar, model_best.pth.tar files
+# checkpoint.pth.tar
+!gdown --id 1K110r6n0kg_j3Xq6ThicwOXpYmiBjQ77
+# model_best.pth.tar
+!gdown --id 10GKd_H4qpdG4PxPVQ-Cjz9pfmdn78B9o
+%cd ../..
+```
 
 
-Clone Repo:
 
-- git clone 
+
+
+
+
+
+
 
 If PIL error occurem, Use -> pip install --upgrade pillow
