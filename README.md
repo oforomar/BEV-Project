@@ -118,8 +118,166 @@ Predict Ground Planes from Point Clouds
 
 ```bash
 !python ./Pseudo_Lidar_V2/src/preprocess/generate_lidar_from_depth.py --calib_dir  "KITTI/testing/calib" \
-    --depth_dir "KITTI/testing/depth_maps/"  \
-    --save_dir  "KITTI/testing/velodyne/"
+    --depth_dir "KITTI/testing/depth_maps/" --save_dir  "KITTI/testing/velodyne/"
+```
+
+
+## Avod
+
+In this step the dataset used should be as follows (extra folders is not an issue):
+
+```
+KITTI
+    | val.txt
+    | testing
+        | calib
+          | 000000.txt
+        | image_2
+          | 000000.png
+        | image_3
+          | 000000.png
+        | planes
+          | 000000.txt
+        | velodyne
+          | 000000.bin
+```
+Compile integral image library in wavedata
+```bash
+!chmod +x ./avod/scripts/install/build_integral_image_lib.bash
+!sh ./avod/scripts/install/build_integral_image_lib.bash
+```
+If for any reason the above command didn't compile, remove CMakeCashe.txt in avod/wavedata/wavedata/tools/core
+
+Avod uses Protobufs to configure model and training parameters. Before the framework can be used, the protos must be compiled (from top level avod folder):
+```bash
+!sh ./avod/avod/protos/run_protoc.sh
+```
+
+### [Pretrained model](https://drive.google.com/file/d/1wuMykUDx8tcCfxpqnprmzrgUyheQV42F/view)
+
+Use the following command to download the checkpoints in checkpoints directoy
+```bash
+# Checkpoints download
+%mkdir avod/avod/data/outputs/pyramid_cars_with_aug_example/checkpoints
+%cd avod/avod/data/outputs/pyramid_cars_with_aug_example/checkpoints
+!gdown --id 1wuMykUDx8tcCfxpqnprmzrgUyheQV42F
+!unzip avod.zip
+%rm -r avod.zip
+%cd ../../../../..
+```
+Run Inferance
+```bash
+!python avod/avod/experiments/run_inference.py --checkpoint_name='pyramid_cars_with_aug_example' \
+    --data_split='val' --ckpt_indices=120 --device='1'
+```
+The output of the above command will be the detected cars in txt files saved in avod/avod/data/outputs/pyramid_cars_with_aug_example/predictions/final_predictions_and_scores/val/120000
+
+### Detection Formats
+
+final_prediction of avod, actually box_3d: (N, 7)    
+[x, y, z, l, w, h, ry, score,type]
+```
+-2.70278 1.18219 31.97493 1.69001 4.29071 1.59802 -1.40545 0.99985 0
+```
+
+KITTI:
+[type, truncation, occlusion, alpha(viewing angle), (x1, y1, x2, y2), (h, w, l), (x, y, z), ry, score]
+```
+Car -1 -1 -1 488.679 171.776 591.806 209.057 1.69 1.598 4.291 -2.703 1.182 31.975 -1.405 1.0
+```
+
+### Converting from avod format to Kitti format
+```bash
+!python to_kitti_format.py --avod_label_path "avod/avod/data/outputs/pyramid_cars_with_aug_example/predictions/final_predictions_and_scores/val/120000" \
+        --save_path KITTI/testing/label_2
+```
+
+## Kitti Detect and Visualition
+
+In this step the dataset used should be as follows (extra folders is not an issue):
+
+```
+KITTI
+    | val.txt
+    | testing
+        | calib
+          | 000000.txt
+        | image_2
+          | 000000.png
+        | planes
+          | 000000.txt
+        | velodyne
+          | 000000.bin
+        | label_2
+          | 000000.txt
+          
+```
+
+Chaning where you are
+```bash
+%cd kitti_object_vis/
+```
+
+Imports
+```bash
+%matplotlib inline
+import matplotlib.pyplot as plt
+import cv2
+from kitti_object import kitti_object, show_lidar_with_depth, show_lidar_on_image, \
+                         show_image_with_boxes, show_lidar_topview_with_boxes
+```
+
+```bash
+from xvfbwrapper import Xvfb
+vdisplay = Xvfb(width=1920, height=1080)
+vdisplay.start()
+from mayavi import mlab
+mlab.init_notebook('ipy')
+```
+
+Detecting 
+```bash
+dataset = kitti_object("../KITTI", "testing")
+# Number of image you want to visualize its BEV
+data_idx = 5
+objects = dataset.get_label_objects(data_idx)
+pc_velo = dataset.get_lidar(data_idx)
+calib = dataset.get_calibration(data_idx)
+img = dataset.get_image(data_idx)
+img_height, img_width, _ = img.shape
+
+fig_3d = mlab.figure(bgcolor=(0, 0, 0), size=(800, 450))
+show_lidar_with_depth(pc_velo, objects, calib, fig_3d, True, img_width, img_height)
+fig_3d
+```
+
+Visualzing 2D image with 3D boxes
+```bash
+_, img_bbox3d = show_image_with_boxes(img, objects, calib)
+img_bbox3d = cv2.cvtColor(img_bbox3d, cv2.COLOR_BGR2RGB)
+
+fig_bbox3d = plt.figure(figsize=(14, 7))
+ax_bbox3d = fig_bbox3d.subplots()
+ax_bbox3d.imshow(img_bbox3d)
+plt.show()
+```
+Visualzing Bird's eye View
+```bash
+img_bev = show_lidar_topview_with_boxes(pc_velo, objects, calib)
+fig_bev = plt.figure(figsize=(7, 14))
+ax_bev = fig_bev.subplots()
+ax_bev.imshow(img_bev)
+plt.show()
+```
+Saving the output as images
+```bash
+import numpy as np
+from PIL import Image
+
+im_3DBOX = Image.fromarray(img_bbox3d)
+im_BEV = Image.fromarray(img_bev)
+im_3DBOX.save("3D_BOX_"+str(data_idx)+".jpeg")
+im_BEV.save("BEV_"+str(data_idx)+".jpeg")
 ```
 
 
