@@ -279,6 +279,3 @@ im_BEV = Image.fromarray(img_bev)
 im_3DBOX.save("3D_BOX_"+str(data_idx)+".jpeg")
 im_BEV.save("BEV_"+str(data_idx)+".jpeg")
 ```
-
-
-If PIL error occurem, Use -> pip install --upgrade pillow
