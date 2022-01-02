@@ -117,8 +117,9 @@ Convert depth maps to Pseudo-Lidar Point Clouds
 Predict Ground Planes from Point Clouds
 
 ```bash
-!python ./Pseudo_Lidar_V2/src/preprocess/generate_lidar_from_depth.py --calib_dir  "KITTI/testing/calib" \
-    --depth_dir "KITTI/testing/depth_maps/" --save_dir  "KITTI/testing/velodyne/"
+!python ./Pseudo_Lidar_V2/src/preprocess/kitti_process_RANSAC.py --calib_dir  "KITTI/testing/calib" \
+    --lidar_dir "KITTI/testing/velodyne" \
+    --planes_dir  "KITTI/testing/planes"
 ```
 
 
