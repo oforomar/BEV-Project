@@ -17,3 +17,4 @@ livereload
 pypng
 tensorflow==1.13.1
 gdown
+xvfbwrapper
