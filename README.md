@@ -88,6 +88,7 @@ img_array = np.load('KITTI/testing/depth_maps/000000.npy')
 plt.imshow(img_array,cmap='gray')
 plt.show()
 ```
+![depthmap_image](https://user-images.githubusercontent.com/66730765/147893777-14dd0415-702d-4b26-8709-2568ab54190f.png)
 
 ## Pseudo Lidar V2
 
@@ -287,3 +288,5 @@ im_BEV = Image.fromarray(img_bev)
 im_3DBOX.save(depthimage_save_path+"3D_BOX_"+str(data_idx)+".jpeg")
 im_BEV.save(depthimage_save_path+"BEV_"+str(data_idx)+".jpeg")
 ```
+![3D_BOX_1018](https://user-images.githubusercontent.com/66730765/147893765-8650ac70-3b4b-41ea-a830-87d9f3aa2e2e.jpeg)
+![BEV_1018](https://user-images.githubusercontent.com/66730765/147893767-b99a6934-2c0c-46c9-966b-32e992f05768.jpeg)
