@@ -5,6 +5,7 @@
 ## Clone this repository
 ```bash
 !git clone https://github.com/oforomar/BEV-Project.git --recurse-submodules
+%cd BEV-Project
 ```
 
 ## Dataset
