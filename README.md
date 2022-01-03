@@ -176,7 +176,7 @@ Run Inferance
 ```
 The output of the above command will be the detected cars in txt files saved in avod/avod/data/outputs/pyramid_cars_with_aug_example/predictions/final_predictions_and_scores/val/120000
 
-### Detection Formats
+### [Detection Formats](https://github.com/kujason/avod/wiki/Data-Formats)
 
 final_prediction of avod, actually box_3d: (N, 7)    
 [x, y, z, l, w, h, ry, score,type]
@@ -196,7 +196,7 @@ Car -1 -1 -1 488.679 171.776 591.806 209.057 1.69 1.598 4.291 -2.703 1.182 31.97
         --save_path KITTI/testing/label_2
 ```
 
-## Kitti Detect and Visualition
+## [Kitti Detect and Visualition](https://github.com/AhmedYousriSobhi/kitti_object_vis)
 
 In this step the dataset used should be as follows (extra folders is not an issue):
 
