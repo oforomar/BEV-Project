@@ -1,3 +1,5 @@
+[![Open in colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Tm4Eq3wh-A3wl9mpN30L8eVAo2Ea3Zd5?usp=sharing)
+
 # Bird's Eye View Detection from Stereo Camera 
 
 ## Clone this repository
@@ -274,9 +276,14 @@ Saving the output as images
 ```bash
 import numpy as np
 from PIL import Image
+import os
 
+depthimage_save_path = "../KITTI/testing/BEV_3D_images/" 
+if not os.path.exists(depthimage_save_path):
+    os.makedirs(depthimage_save_path)
+    
 im_3DBOX = Image.fromarray(img_bbox3d)
 im_BEV = Image.fromarray(img_bev)
-im_3DBOX.save("3D_BOX_"+str(data_idx)+".jpeg")
-im_BEV.save("BEV_"+str(data_idx)+".jpeg")
+im_3DBOX.save(depthimage_save_path+"3D_BOX_"+str(data_idx)+".jpeg")
+im_BEV.save(depthimage_save_path+"BEV_"+str(data_idx)+".jpeg")
 ```
